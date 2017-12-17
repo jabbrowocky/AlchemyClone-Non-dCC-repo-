@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace AlchemyClone
 {
-    class Pressure : Element
+    class Wind : Element
     {
         
-        public Pressure()
+        public Wind()
         {
-            CreateRecipeOne(new Earth(), new Earth());
-            ElementName = "Pressure";
-            ElementNumber = 6;
+            CreateRecipeOne(new Air(), new Air());
+            ElementName = "Wind";
+            ElementNumber = 7;
         }
        
+        
     }
+    
 }

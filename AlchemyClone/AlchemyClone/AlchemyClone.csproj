@@ -52,8 +52,11 @@
     <Compile Include="Pressure.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sea.cs" />
     <Compile Include="Steam.cs" />
+    <Compile Include="UI.cs" />
     <Compile Include="Water.cs" />
+    <Compile Include="Wind.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

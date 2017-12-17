@@ -19,11 +19,12 @@ namespace AlchemyClone
         }
         public void RunGame()
         {
-            Element firstSelection;
-            Element secondSelection;
-            Element potentialResult;
             CreateUnlockableDictionary();
             CreatePlayer();
+
+            Element firstSelection;
+            Element secondSelection;
+            Element potentialResult;           
 
             while (gameRunning)
             {
@@ -35,22 +36,16 @@ namespace AlchemyClone
                     potentialResult = ElementCombiner(firstSelection, secondSelection);
                     if (potentialResult == null)
                     {
-                        Console.WriteLine("Please try again. Press any key to continue");
-                        Console.ReadKey(true);
-                        Console.Clear();
+                        UI.RetryMessage();
                     }
                     else
                     {
-                        Console.WriteLine("You've created {0}! Press any key to continue", potentialResult.ElementName);
-                        Console.ReadKey();
-                        Console.Clear();
+                        UI.AlertNewElement(potentialResult.ElementName);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Please try again. Press any key to continue");
-                    Console.ReadKey(true);
-                    Console.Clear();
+                    UI.RetryMessage();
                 }
                 if (unlockableElements.Count == 0)
                 {
@@ -65,8 +60,12 @@ namespace AlchemyClone
         {
             Steam steam = new Steam();
             Pressure pressure = new Pressure();
+            Wind wind = new Wind();
+            Sea sea = new Sea();
             unlockableElements.Add(steam.ElementNumber, steam);
             unlockableElements.Add(pressure.ElementNumber, pressure);
+            unlockableElements.Add(wind.ElementNumber, wind);
+            unlockableElements.Add(sea.ElementNumber, sea);
         }
         private void CreatePlayer()
         {
@@ -109,28 +108,27 @@ namespace AlchemyClone
             }
             return null;
         }
-        private Element ElementCombiner(Element firstElement, Element secondElement)
+        
+        private Element ElementCombiner(Element firstElementSelection, Element secondElementSelection)
         {
             Element newElement;
-            StringBuilder ingredientA = new StringBuilder();
-            
-            StringBuilder ingredientB = new StringBuilder();
-            
+           
+            string ingredientA;
+            string ingredientB;
+
             foreach (KeyValuePair<int, Element> element in unlockableElements)
             {
-                ingredientA.Append(element.Value.recipeOne[0].ElementName);
-                
-                ingredientB.Append(element.Value.recipeOne[1].ElementName);
-                
-                
-                if ((ingredientA.ToString() == firstElement.ElementName) && (ingredientB.ToString() == secondElement.ElementName))
+                ingredientA = element.Value.recipeOne[0].ElementName;
+                ingredientB = element.Value.recipeOne[1].ElementName;
+                                
+                if ((ingredientA == firstElementSelection.ElementName) && (ingredientB == secondElementSelection.ElementName))
                 {
                     newElement = element.Value;
                     unlockableElements.Remove(element.Value.ElementNumber);
                     user.unlockedElements.Add(element.Value.ElementNumber, element.Value);
                     return newElement;
                 }
-                else if ((ingredientA.ToString() == secondElement.ElementName)&&(ingredientB.ToString() == firstElement.ElementName))
+                if ((ingredientA == secondElementSelection.ElementName)&&(ingredientB == firstElementSelection.ElementName))
                 {
                     newElement = element.Value;
                     unlockableElements.Remove(element.Value.ElementNumber);

@@ -36,6 +36,10 @@ namespace AlchemyClone
                 elementNumber = value;
             }
         }
+        public virtual void CreateRecipeOne(Element firstElement, Element secondElement)
+        {
+            recipeOne = new Element[] { firstElement, secondElement };
+        }
         
     }
 }
